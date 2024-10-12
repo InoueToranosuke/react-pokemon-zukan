@@ -2,7 +2,7 @@
 import { useQuery } from '@tanstack/react-query';
 import React, { useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import { fetchPokemonDetail } from '../api/pokemonDetail';
+import { fetchPokemonDetail, PokemonDetail as PokemonDetailType } from '../api/pokemonDetail';
 import PokemonTypeLabel from '../components/pokemonTypeLabel';
 import { apiQueryKeys } from '../queryKeys';
 import Skeleton from 'react-loading-skeleton';
@@ -11,7 +11,7 @@ import 'react-loading-skeleton/dist/skeleton.css';
 const PokemonDetail: React.FC = () => {
   const { id } = useParams<{ id: string }>();
 
-  const { data, isLoading, error } = useQuery({
+  const { data, isLoading, error } = useQuery<PokemonDetailType>({
     queryKey: [apiQueryKeys.pokemon.detail(Number(id))],
     queryFn: () => fetchPokemonDetail(Number(id)),
     enabled: !!id,
@@ -40,7 +40,7 @@ const PokemonDetail: React.FC = () => {
           <span className="w-fit whitespace-nowrap text-right">特性</span>
         <div className="flex gap-2">
           <div className="grid grid-cols-2 gap-2 w-full">
-            {data?.abilitys?.map((ability) => (
+            {data?.abilities?.map((ability) => (
               <span key={ability}>{ability}</span>
             ))}
           </div>

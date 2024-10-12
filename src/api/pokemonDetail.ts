@@ -2,13 +2,15 @@
 import { FlavorTextEntry, PokemonType } from './pokemon.type';
 import { Name } from './common.type';
 
-type PokemonDetail = {
+export type PokemonDetail = {
   id: number;
   name: string;
   japaneseName: string;
   image: string;
   types: string[];
+  abilities: string[];
   description: string;
+  baseStats: { name: string; value: number }[];
 };
 
 export const fetchPokemonDetail = async (id: number): Promise<PokemonDetail> => {
@@ -54,5 +56,10 @@ export const fetchPokemonDetail = async (id: number): Promise<PokemonDetail> => 
     image: data.sprites.front_default,
     types,
     description,
+    abilities: data.abilities.map((ability: { ability: Name }) => ability.ability.name),
+    baseStats: data.stats.map((stat: { base_stat: number; stat: { name: string } }) => ({
+      name: stat.stat.name,
+      value: stat.base_stat,
+    })),
   };
 };

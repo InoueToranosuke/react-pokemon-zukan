@@ -1,4 +1,5 @@
 // src/api/pokemonWithJapaneseName.ts
+import { INITIAL_POKEMON_LIST_LIMIT } from '../config';
 import { fetchPokemonList, PokemonListResult } from './pokemon';
 import { Pokemon } from './pokemon.type';
 import { fetchPokemonJapaneseName } from './pokemonSpecies';
@@ -20,7 +21,7 @@ export type PokemonListWithJapaneseNames = {
 };
 
 // 日本語名を含むポケモンリストを取得する関数
-export const fetchPokemonListWithJapaneseNames = async (offset: number = 0, limit: number = 20): Promise<PokemonListWithJapaneseNames> => {
+export const fetchPokemonListWithJapaneseNames = async (offset: number = 0, limit: number = INITIAL_POKEMON_LIST_LIMIT): Promise<PokemonListWithJapaneseNames> => {
   // 基本的なポケモンリストを取得
   const pokemonList: PokemonListResult = await fetchPokemonList(offset, limit);
   
@@ -56,3 +57,4 @@ export const fetchPokemonListWithJapaneseNames = async (offset: number = 0, limi
   // 元のリスト情報と更新された結果を組み合わせて返す
   return { ...pokemonList, results: updatedResults };
 };
+
